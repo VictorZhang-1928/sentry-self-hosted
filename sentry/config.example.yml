@@ -65,7 +65,7 @@ system.internal-url-prefix: 'http://web:9000'
 #
 # If you are using SENTRY_SYSTEM_SECRET_KEY that is being set on your `.env` or `.env.custom` file,
 # you should remove this line below as it won't be used anyway.
-system.secret-key: '!!changeme!!'
+# system.secret-key: '!!changeme!!'
 
 # The ``redis.clusters`` setting is used, unsurprisingly, to configure Redis
 # clusters. These clusters can be then referred to by name when configuring

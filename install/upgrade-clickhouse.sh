@@ -1,5 +1,15 @@
 echo "${_group}Upgrading Clickhouse ..."
 
+# Notice user whether or not we are upgrading clickhouse
+echo "The required clickhouse version is 25.3. If you are upgrading from a version older than 25.3, the upgrade process may take some time as multiple intermediate upgrades may be required."
+echo "Should we upgrade clickhouse if necessary? (y/N)"
+read -r upgrade_clickhouse_response
+if [[ ! "$upgrade_clickhouse_response" =~ ^[Yy]$ ]]; then
+  echo "Skipping clickhouse upgrade."
+  echo "${_endgroup}"
+  return 0
+fi
+
 # First check to see if user is upgrading by checking for existing clickhouse volume
 if [ "$CONTAINER_ENGINE" = "podman" ]; then
   ps_command="$dc ps"

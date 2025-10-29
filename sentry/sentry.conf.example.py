@@ -137,7 +137,7 @@ SENTRY_NODESTORE_OPTIONS = {
 
 SENTRY_OPTIONS["redis.clusters"] = {
     "default": {
-        "hosts": {0: {"host": "redis", "password": "", "port": "6379", "db": "0"}}
+        "hosts": {0: {"host": "redis.monitor.txb.local", "password": "tDP9joWogO2xfS47IFSSgVcKT4oiZgMp", "port": "16379", "db": "0"}}
     }
 }
 
