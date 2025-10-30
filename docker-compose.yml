@@ -92,7 +92,7 @@ x-snuba-defaults: &snuba_defaults
     CLICKHOUSE_HOST: clickhouse.monitor.txb.local
     CLICKHOUSE_PORT: 19000
     CLICKHOUSE_USER: sentry
-    CLICKHOUSE_PASSWORD: S6qHdb4FMoZm7Q9hWShq2HzM4nyOm9i0
+    CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-your_strong_password}
     CLICKHOUSE_DATABASE: sentry
     CLICKHOUSE_HTTP_PORT: 18123
     DEFAULT_BROKERS: "kafka:9092"
