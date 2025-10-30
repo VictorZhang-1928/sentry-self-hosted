@@ -9,7 +9,7 @@ processing:
   kafka_config:
     - {name: "bootstrap.servers", value: "kafka:9092"}
     - {name: "message.max.bytes", value: 50000000} # 50MB
-  redis: redis://:tDP9joWogO2xfS47IFSSgVcKT4oiZgMp@redis.monitor.txb.local:16379
+  redis: redis://:${REDIS_PASSWORD:-your_strong_password}@redis.monitor.txb.local:16379
   geoip_path: "/geoip/GeoLite2-City.mmdb"
 
 # In some cases, relay might fail to find out the actual machine memory

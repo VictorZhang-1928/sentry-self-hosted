@@ -14,6 +14,6 @@
 +    - {name: "ssl.ca.location", value: "/kafka-certificates/ca.pem"} # Remove or comment this line if SSL is not used.
 +    - {name: "ssl.certificate.location", value: "/kafka-certificates/client.pem"} # Remove or comment this line if SSL is not used.
 +    - {name: "ssl.key.location", value: "/kafka-certificates/client.key"} # Remove or comment this line if SSL is not used.
-   redis: redis://:tDP9joWogO2xfS47IFSSgVcKT4oiZgMp@redis.monitor.txb.local:16379
+   redis: redis://:${REDIS_PASSWORD:-your_strong_password}@redis.monitor.txb.local:16379
    geoip_path: "/geoip/GeoLite2-City.mmdb"
  

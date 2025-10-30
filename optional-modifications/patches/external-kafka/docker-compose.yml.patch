@@ -169,7 +169,7 @@
 +      UPTIME_CHECKER_KAFKA_SASL_MECHANISM: ${KAFKA_SASL_MECHANISM:-}
 +      UPTIME_CHECKER_KAFKA_SASL_USERNAME: ${KAFKA_SASL_USERNAME:-}
 +      UPTIME_CHECKER_KAFKA_SASL_PASSWORD: ${KAFKA_SASL_PASSWORD:-}
-       UPTIME_CHECKER_REDIS_HOST: redis://:tDP9joWogO2xfS47IFSSgVcKT4oiZgMp@redis.monitor.txb.local:16379
+       UPTIME_CHECKER_REDIS_HOST: redis://:${REDIS_PASSWORD:-your_strong_password}@redis.monitor.txb.local:16379
        # Set to `true` will allow uptime checks against private IP addresses
        UPTIME_CHECKER_ALLOW_INTERNAL_IPS: "false"
 @@ -582,8 +583,6 @@
