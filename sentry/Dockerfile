@@ -1,6 +1,9 @@
 ARG SENTRY_IMAGE
 FROM ${SENTRY_IMAGE}
 
+# Use Chinese PyPI mirror
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
 RUN pip install https://github.com/stayallive/sentry-nodestore-s3/archive/main.zip
 
 COPY . /usr/src/sentry

@@ -101,7 +101,7 @@ SENTRY_SELF_HOSTED_ERRORS_ONLY = env("COMPOSE_PROFILES") != "feature-complete"
 # Setting the value to False while running in an air-gapped environment will
 # cause some containers to raise exceptions. One known example is fetching
 # AI model prices from various public APIs.
-SENTRY_AIR_GAP = False
+SENTRY_AIR_GAP = True
 
 ################
 # Node Storage #
