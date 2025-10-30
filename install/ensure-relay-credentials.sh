@@ -6,7 +6,8 @@ RELAY_CREDENTIALS_JSON=relay/credentials.json
 ensure_file_from_example $RELAY_CONFIG_YML
 
 # Replace ENV vars from .env into relay/config.yml
-envsubst <"$RELAY_CONFIG_YML" >"$RELAY_CONFIG_YML".tmp
+source .env
+envsubst '$REDIS_PASSWORD' < "$RELAY_CONFIG_YML" >"$RELAY_CONFIG_YML".tmp
 mv "$RELAY_CONFIG_YML".tmp "$RELAY_CONFIG_YML"
 
 if [[ -f "$RELAY_CREDENTIALS_JSON" ]]; then
