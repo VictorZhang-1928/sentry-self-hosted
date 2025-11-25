@@ -70,6 +70,7 @@ x-sentry-defaults: &sentry_defaults
     SENTRY_EVENT_RETENTION_DAYS:
     SENTRY_MAIL_HOST:
     SENTRY_MAX_EXTERNAL_SOURCEMAP_SIZE:
+    SENTRY_STATSD_ADDR: "${STATSD_ADDR:-}"
     TZ: Asia/Shanghai
   volumes:
     - "sentry-data:/data"
@@ -113,8 +114,7 @@ x-snuba-defaults: &snuba_defaults
     SENTRY_EVENT_RETENTION_DAYS:
     # If you have statsd server, you can utilize that to monitor self-hosted Snuba containers.
     # To start, state these environment variables below on your `.env.` file and adjust the options as needed.
-    SNUBA_STATSD_HOST: # Example value: "100.100.123.123". Must be an IP address, not domain name
-    SNUBA_STATSD_PORT: # Example value: 8125
+    SNUBA_STATSD_ADDR: "${STATSD_ADDR:-}"
     TZ: Asia/Shanghai
   extra_hosts:
     - "redis.monitor.txb.local:$REDIS_HOST_IP"
@@ -508,16 +508,11 @@ services:
     command: subscriptions-scheduler-executor --dataset events_analytics_platform --entity eap_items --auto-offset-reset=latest --no-strict-offset-reset --consumer-group=snuba-eap-items-subscriptions-consumers --followed-consumer-group=eap_items_group --schedule-ttl=60 --stale-threshold-seconds=900 --health-check-file /tmp/health.txt
     healthcheck:
       <<: *file_healthcheck_defaults
-  snuba-uptime-results-consumer:
-    <<: *snuba_defaults
-    command: rust-consumer --storage uptime_monitor_checks --consumer-group snuba-uptime-results --auto-offset-reset=latest --max-batch-time-ms 750 --no-strict-offset-reset --health-check-file /tmp/health.txt
-    healthcheck:
-      <<: *file_healthcheck_defaults
-    profiles:
-      - feature-complete
   symbolicator:
     <<: *restart_policy
     image: $SYMBOLICATOR_IMAGE
+    environment:
+      SYMBOLICATOR_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
     command: run -c /etc/symbolicator/config.yml
     environment:
       TZ: Asia/Shanghai
@@ -770,6 +765,7 @@ services:
     image: "$RELAY_IMAGE"
     environment:
       TZ: Asia/Shanghai
+      RELAY_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
     volumes:
       - type: bind
         read_only: true
@@ -800,6 +796,7 @@ services:
       TASKBROKER_KAFKA_CLUSTER: "kafka:9092"
       TASKBROKER_KAFKA_DEADLETTER_CLUSTER: "kafka:9092"
       TASKBROKER_DB_PATH: "/opt/sqlite/taskbroker-activations.sqlite"
+      TASKBROKER_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
       TZ: Asia/Shanghai
     volumes:
       - sentry-taskbroker:/opt/sqlite
@@ -881,6 +878,7 @@ services:
       # Separated by commas. Leaving this unset will default to the systems dns
       # resolver.
       #UPTIME_CHECKER_HTTP_CHECKER_DNS_NAMESERVERS: "8.8.8.8,8.8.4.4"
+      UPTIME_CHECKER_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
       TZ: Asia/Shanghai
     depends_on:
       kafka:
