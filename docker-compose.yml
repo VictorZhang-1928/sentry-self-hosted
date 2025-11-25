@@ -513,9 +513,8 @@ services:
     image: $SYMBOLICATOR_IMAGE
     environment:
       SYMBOLICATOR_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
-    command: run -c /etc/symbolicator/config.yml
-    environment:
       TZ: Asia/Shanghai
+    command: run -c /etc/symbolicator/config.yml
     volumes:
       - "sentry-symbolicator:/data"
       - type: bind
