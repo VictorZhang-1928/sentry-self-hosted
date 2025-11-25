@@ -48,7 +48,7 @@ mail.host: 'smtp'
 # This is the main URL prefix where Sentry can be accessed.
 # Sentry will use this to create links to its different parts of the web UI.
 # This is most helpful if you are using an external reverse proxy.
-# system.url-prefix: https://example.sentry.com
+system.url-prefix: https://sentry-dev.jstxb.com
 
 # Most of the time, this should NOT be changed. It's used for communication
 # between containers. `web` is the container's name, and `9000` is the

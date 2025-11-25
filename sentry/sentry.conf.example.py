@@ -45,11 +45,11 @@ INTERNAL_SYSTEM_IPS = (get_internal_network(),)
 DATABASES = {
     "default": {
         "ENGINE": "sentry.db.postgres",
-        "NAME": "postgres",
-        "USER": "postgres",
+        "NAME": "sentry",
+        "USER": "sentry",
         "PASSWORD": "",
         "HOST": "pgbouncer",
-        "PORT": "",
+        "PORT": "5432",
     }
 }
 
@@ -274,11 +274,11 @@ SENTRY_WEB_OPTIONS = {
 # If you're using a reverse SSL proxy, you should enable the X-Forwarded-Proto
 # header and enable the settings below
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# USE_X_FORWARDED_HOST = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 # End of SSL/TLS settings
 
@@ -423,7 +423,7 @@ CSP_REPORT_ONLY = True
 # this to match your IPs/domains. Ports should be included if you are using custom ports.
 # https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-CSRF_TRUSTED_ORIGINS
 
-# CSRF_TRUSTED_ORIGINS = ["https://example.com", "http://127.0.0.1:9000"]
+CSRF_TRUSTED_ORIGINS = ["http://sentry-dev.jstxb.local:9000", "http://172.18.39.22:9000"]
 
 #################
 # JS SDK Loader #
