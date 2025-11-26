@@ -71,7 +71,7 @@ x-sentry-defaults: &sentry_defaults
     SENTRY_MAIL_HOST:
     SENTRY_MAX_EXTERNAL_SOURCEMAP_SIZE:
     SENTRY_STATSD_ADDR: "${STATSD_ADDR:-}"
-    TZ: Asia/Shanghai
+    # TZ: Asia/Shanghai
   volumes:
     - "sentry-data:/data"
     - "./sentry:/etc/sentry"
@@ -115,7 +115,7 @@ x-snuba-defaults: &snuba_defaults
     # If you have statsd server, you can utilize that to monitor self-hosted Snuba containers.
     # To start, state these environment variables below on your `.env.` file and adjust the options as needed.
     SNUBA_STATSD_ADDR: "${STATSD_ADDR:-}"
-    TZ: Asia/Shanghai
+    # TZ: Asia/Shanghai
   extra_hosts:
     - "redis.monitor.txb.local:$REDIS_HOST_IP"
     - "clickhouse.monitor.txb.local:$CLICKHOUSE_HOST_IP"
@@ -199,7 +199,9 @@ services:
       POOL_MODE: transaction
       ADMIN_USERS: sentry
       MAX_CLIENT_CONN: 10000
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
+      TZ: UTC
+      PGTZ: UTC
     volumes:
       - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
       - /etc/timezone:/etc/timezone:ro
@@ -232,7 +234,7 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.cluster=WARN,kafka.controller=WARN,kafka.coordinator=WARN,kafka.log=WARN,kafka.server=WARN,state.change.logger=WARN"
       KAFKA_LOG4J_ROOT_LOGLEVEL: "WARN"
       KAFKA_TOOLS_LOG4J_LOGLEVEL: "WARN"
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     ulimits:
       nofile:
         soft: 4096
@@ -319,7 +321,7 @@ services:
     environment:
       AWS_ACCESS_KEY_ID: sentry
       AWS_SECRET_ACCESS_KEY: sentry
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     volumes:
       - "sentry-seaweedfs:/data"
     healthcheck:
@@ -513,7 +515,7 @@ services:
     image: $SYMBOLICATOR_IMAGE
     environment:
       SYMBOLICATOR_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     command: run -c /etc/symbolicator/config.yml
     volumes:
       - "sentry-symbolicator:/data"
@@ -531,7 +533,8 @@ services:
     image: $SYMBOLICATOR_IMAGE
     command: "cleanup -c /etc/symbolicator/config.yml --repeat 1h"
     environment:
-      TZ: Asia/Shanghai
+      SYMBOLICATOR_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
+      # TZ: Asia/Shanghai
     volumes:
       - "sentry-symbolicator:/data"
       - type: bind
@@ -736,7 +739,7 @@ services:
       - "$SENTRY_BIND:80/tcp"
     image: "nginx:1.29.1-alpine"
     environment:
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     volumes:
       - type: bind
         read_only: true
@@ -763,7 +766,7 @@ services:
     <<: *restart_policy
     image: "$RELAY_IMAGE"
     environment:
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
       RELAY_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
     volumes:
       - type: bind
@@ -796,7 +799,7 @@ services:
       TASKBROKER_KAFKA_DEADLETTER_CLUSTER: "kafka:9092"
       TASKBROKER_DB_PATH: "/opt/sqlite/taskbroker-activations.sqlite"
       TASKBROKER_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     volumes:
       - sentry-taskbroker:/opt/sqlite
     depends_on:
@@ -824,7 +827,7 @@ services:
       SENTRY_KAFKA_BROKERS_OCCURRENCES: "kafka:9092"
       SENTRY_BUCKET_PROFILES: file:///var/vroom/sentry-profiles
       SENTRY_SNUBA_HOST: "http://snuba-api:1218"
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     volumes:
       - sentry-vroom:/var/vroom/sentry-profiles
     healthcheck:
@@ -851,7 +854,7 @@ services:
     #     BASE_IMAGE: "$VROOM_IMAGE"
     entrypoint: "/entrypoint.sh"
     environment:
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
       # Leaving the value empty to just pass whatever is set
       # on the host system (or in the .env file)
       SENTRY_EVENT_RETENTION_DAYS:
@@ -878,7 +881,7 @@ services:
       # resolver.
       #UPTIME_CHECKER_HTTP_CHECKER_DNS_NAMESERVERS: "8.8.8.8,8.8.4.4"
       UPTIME_CHECKER_STATSD_ADDR: ${STATSD_ADDR:-127.0.0.1:8125}
-      TZ: Asia/Shanghai
+      # TZ: Asia/Shanghai
     depends_on:
       kafka:
         <<: *depends_on-healthy

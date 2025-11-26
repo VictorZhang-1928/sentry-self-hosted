@@ -433,6 +433,28 @@ SENTRY_FEATURES.update(
             "organizations:ourlogs-stats",
             "organizations:ourlogs-replay-ui",
         )
+        # Trace View is not needed anymore
+        # Performance Trace Explorer
+        + (
+            "organizations:performance-trace-explorer", # Required
+            # "organizations:visibility-explore-view", # Required. Already included above
+            "organizations:visibility-explore-aggregate-editor", # Enable aggregates table editor on the new explore page
+            "organizations:visibility-explore-equations", # Enable equations feature on the new explore page
+            # "organizations:visibility-explore-range-high", # Enable high date range options on new explore page. Already included above
+        )
+        # Event Analytics Platform
+        + (
+            # "organizations:span-stats", # already included above
+            "organizations:performance-issues-spans",
+            # "organizations:transaction-metrics-extraction", # Extraction metrics for transactions during ingestion. Already included above
+            # "organizations:indexed-spans-extraction", # Starfish: extract metrics from the spans. Already included above
+        )
+        # Native OpenTelemetry Ingestion
+        + (
+            "organizations:performance-otel-friendly-ui",
+            "organizations:relay-otlp-traces-endpoint",
+            "organizations:relay-otel-logs-endpoint",
+        )
     }
 )
 
